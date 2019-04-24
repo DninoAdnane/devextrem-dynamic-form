@@ -1,0 +1,85 @@
+
+<div id="form-container" > 
+  <dx-form id="form" [colCount]="colNumber" [width]="width" >
+    <dxi-item *ngFor="let section of datas" itemType="group" caption="{{section.section}}" >
+      <ng-container *ngFor="let field of section.sectionElements" >
+        <dxi-item *ngIf="field.type==Types.INPUT" [dataField]="field.label">
+            <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+          <dx-text-box
+            [(value)]="field.defaultValue"
+            [disabled]="field.disabled"
+          ></dx-text-box>
+        </dxi-item>
+        <dxi-item *ngIf="field.type==Types.TEXTAREA" [dataField]="field.label" >
+            <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+          <dx-text-area
+            [(value)]="field.defaultValue"
+            [disabled]="field.disabled"
+          ></dx-text-area>
+        </dxi-item>
+        <dxi-item *ngIf="field.type==Types.DATE" [dataField]="field.label" >
+            <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+          <dx-date-box
+            [(value)]="field.defaultValue"
+            [width]="200"
+            [disabled]="field.disabled"
+          ></dx-date-box>
+        </dxi-item>
+        <dxi-item *ngIf="field.type==Types.SELECT && field.multiple==false" [dataField]="field.label" >
+            <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+            <dx-select-box
+            [(dataSource)]="field.customData == undefined? field.datas : field.customData"
+            [displayExpr] = "field.customData == undefined? 'text' : field.valueTextUrl.textKey"
+            [valueExpr]="field.customData == undefined? 'value' : field.valueTextUrl.valueKey"
+            [searchEnabled]="true"
+            [(value)] = "field.selected"
+            width =  "100%"
+            [disabled]="field.disabled"
+            >
+            </dx-select-box>
+        </dxi-item>
+        <dxi-item *ngIf="field.type==Types.SELECT && field.multiple==true" [dataField]="field.label" >
+          <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+          <dx-tag-box
+          [(dataSource)]="field.customData == undefined? field.datas : field.customData"
+          [displayExpr] = "field.customData == undefined? 'text' : field.valueTextUrl.textKey"
+          [valueExpr]="field.customData == undefined? 'value' : field.valueTextUrl.valueKey"
+          [searchEnabled]="true"
+          [disabled]="field.disabled"
+          [(value)]="field.defaultValue"
+          >
+          </dx-tag-box>
+        </dxi-item>
+        <dxi-item *ngIf="field.type==Types.RADIO" class="dx-field" >
+          <div class="dx-field-label">{{field.label}}:</div>
+          <div class="dx-field-value" >
+            <dx-radio-group
+              [(dataSource)]="field.datas"
+              displayExpr = "text"
+              valueExpr="value"
+              [(value)] = "field.selected"
+              layout="horizontal"
+              [disabled]="field.disabled"
+            ></dx-radio-group>
+          </div>
+        </dxi-item>
+        <dxi-item #item *ngIf="field.type==Types.CHEKBOX" [dataField]="field.label" >
+          <ng-container *ngFor="let checkElement of field.datas" >
+            <dx-check-box 
+            [text]=checkElement.text 
+            [(value)]="checkElement.selected" 
+            style="margin-right: 10px;"
+            [disabled]="field.disabled"
+            ></dx-check-box>
+          </ng-container>
+        </dxi-item>
+        
+      </ng-container>
+    </dxi-item>
+  </dx-form>
+</div>
+
+<!-- <div class="actions" >
+  <button class="btn btn-info" style="border-radius: 0px; text-transform: uppercase;" >{{validationButton}}</button>
+  <button class="btn btn-outline-info" style="border-radius: 0px; margin-left: 10px; text-transform: uppercase;">{{cancelButton}}</button>
+</div> -->

@@ -1,0 +1,31 @@
+{
+  "name": "devextreme-dynamic-form",
+  "version": "1.0.0",
+  "description": "devextrem-dynamic-form is library build for angular applications that helps to build and generate forms using un simple class and some decorators ",
+  "author": "adnane GUETTAF",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DninoAdnane/devextrem-dynamic-form"
+  },
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "decorator",
+    "directive",
+    "devextreme",
+    "devextreme-angular",
+    "form",
+    "input",
+    "group box",
+    "checkbox",
+    "text"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0",
+    "devextreme": "^18.2.7",
+    "devextreme-angular": "^18.2.7"
+  }
+}
