@@ -17,7 +17,7 @@ if you are not using devextreme in your angular project, you have to add those t
 `npm install --save devextreme devextreme-angular`
 
 then, in your `angular.json (angular-cli.json)`, add the `dx.common.css`and the `theme` you want to use, for example : 
-```
+```javascript
 { 
   ... 
   "apps": [ 
@@ -37,7 +37,7 @@ then, in your `angular.json (angular-cli.json)`, add the `dx.common.css`and the 
 } 
 ```
 You will need to also to add this in your **tsconfig.json**
-```
+```javascript
 "compilerOptions": {
     ...
     "paths": {
@@ -51,7 +51,7 @@ You will need to also to add this in your **tsconfig.json**
 ## Configuration
 
 **.** In order to use this component, you need first to import `DxDynamicFormrmModule` in your app.module, or the module that will be holding this component :
-```
+```javascript
 @NgModule({ 
   ...
   imports: [ 
@@ -65,7 +65,7 @@ export class AppModule { }
 
 **.** Create a class, for example `Test` and decorate all your attributes with annotations (decorators):
 
-```
+```javascript
 import {FormDeco,FormTypes,SectionForm} from "devextreme-dynamic-form";
 
 export class Test {
@@ -120,14 +120,14 @@ export class Test {
 
 ```
 And create a **ts** file where you export all classes from witch you want to generate a form, lets call it **handler.ts**, in our case, it will contain only this line:
-```
+```javascript
 export {Test} from "./test";
 ```
 
 **handler.ts** will be used to instantiate the forms'classes.
 
 **.** In your app.component.ts, import `DxDynamicFormComponent` and `handler.ts content` :
-```
+```javascript
 import * as handler from "./handler";
 import { DxDynamicFormComponent } from 'libform';
 ...
@@ -148,7 +148,7 @@ export class AppComponent {
 `handlerInst`will be passed as an `@Input()` param to **dx-dynamic-form**
 
 **.** In your app.component.html, just add the selector tag of the library with some input parameters :
-```
+```javascript
 <dx-dynamic-form 
     [handlerInstantition]="handlerInst" 
     colNumber="2" 
@@ -158,7 +158,7 @@ export class AppComponent {
 
 ```
 **.** Finally, if you wana retreive selected or introduced datas of the form, you have to call **generateDataToSend** method line this : 
-```
+```javascript
 this.dxDynamicForm..generateDataToSend();
 ```
 ## Credits
