@@ -1,6 +1,6 @@
 {
   "name": "devextreme-dynamic-form",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "devextrem-dynamic-form is library build for angular applications that helps to build and generate forms using un simple class and some decorators ",
   "author": "adnane GUETTAF",
   "repository": {
@@ -21,7 +21,7 @@
     "checkbox",
     "text"
   ],
-  "license": "MIT",
+  "license": "SEE LICENSE FIL",
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",

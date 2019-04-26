@@ -129,7 +129,7 @@ export {Test} from "./test";
 **.** In your app.component.ts, import `DxDynamicFormComponent` and `handler.ts content` :
 ```javascript
 import * as handler from "./handler";
-import { DxDynamicFormComponent } from 'libform';
+import { DxDynamicFormComponent } from 'devextreme-dynamic-form';
 ...
 @Component({
   selector: 'app-root',
