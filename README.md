@@ -90,6 +90,18 @@ export class Test {
     })
     secondField;
 
+    @FormDeco({
+        label : "select an email",
+        type : FormTypes.INPUT,
+        required : true,
+        isEmail : true,
+        isEmailErrorString : "please enter a valid email!",
+        lengthString : true,
+        max :10,
+        lengthErrorString : "email too long !!"
+    })
+    theirdFild;
+
     @SectionForm("Seciont2")
     section1;
 
@@ -99,7 +111,7 @@ export class Test {
         datas : [{value : 0, text : "devextreme"},{value : 1, text : "devextreme-angular"},{value : 2, text : "devextreme-dynamic-form"}],
         defaultValue : 2
     })
-    theirdField;
+    fourthField;
 
     @FormDeco({
         label : "Date selector",
@@ -107,15 +119,15 @@ export class Test {
         defaultValue: new Date(),
         required : true
     })
-    fourthField;
+    fifthField;
 
     @FormDeco({
-        label : "Checkbox",
+        label : "Number selector",
         type : FormTypes.CHEKBOX,
-        datas : [{value : 0, text : "devextreme"},{value : 1, text : "devextreme-angular"},{value : 2, text : "devextreme-dynamic-form"}],
-        defaultValue : [0,2]
+        min : 3, // if not given, no min is considered
+        step : 0.1 //default 1
     })
-    fifthField;
+    sixthField;
 }
 
 ```
@@ -161,6 +173,9 @@ export class AppComponent {
 ```javascript
 this.dxDynamicForm..generateDataToSend();
 ```
+this method will first check if the form is `valid`, if it's not, it return an empty array, and `display alerts` in fields in which there a validation error.
+
+
 ## Credits
 
 this project is based on [devextreme](https://github.com/DevExpress/DevExtreme) modules, an incredible cross-platform component containing everything you need to create responsive web apps. 
