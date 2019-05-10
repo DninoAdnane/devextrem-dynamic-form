@@ -4,5 +4,6 @@ export enum FormTypes {
     CHEKBOX,
     SELECT,
     DATE,
-    RADIO
+    RADIO,
+    NUMBER_PICKER
 }

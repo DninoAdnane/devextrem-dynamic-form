@@ -1,30 +1,78 @@
 
 <div id="form-container" > 
-  <dx-form id="form" [colCount]="colNumber" [width]="width" >
+  <dx-form id="form" [colCount]="colNumber" [width]="width" validationGroup="formGroup" >
     <dxi-item *ngFor="let section of datas" itemType="group" caption="{{section.section}}" >
       <ng-container *ngFor="let field of section.sectionElements" >
+
         <dxi-item *ngIf="field.type==Types.INPUT" [dataField]="field.label">
-            <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+          <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
           <dx-text-box
             [(value)]="field.defaultValue"
             [disabled]="field.disabled"
-          ></dx-text-box>
-        </dxi-item>
-        <dxi-item *ngIf="field.type==Types.TEXTAREA" [dataField]="field.label" >
+          >
+          <dx-validator validationGroup="formGroup">
             <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+            <dxi-validation-rule *ngIf="field.patternExpr" type="pattern" [pattern]="field.patternExpr" [message]="field.patternErroString" ></dxi-validation-rule>
+            <dxi-validation-rule *ngIf="field.lengthString" type="stringLength"
+              [min]="field.min !== null ? field.min : undefined"
+              [max]="field.max !== null ? field.max : undefined"
+              [message]="field.lengthErrorString"
+            ></dxi-validation-rule>
+            <dxi-validation-rule *ngIf="field.isEmail" type="email" [message]="field.isEmailErrorString" ></dxi-validation-rule>
+          </dx-validator>
+          </dx-text-box>
+        </dxi-item>
+
+        <dxi-item *ngIf="field.type==Types.TEXTAREA" [dataField]="field.label" >
+          <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
           <dx-text-area
             [(value)]="field.defaultValue"
             [disabled]="field.disabled"
-          ></dx-text-area>
+          >
+          <dx-validator validationGroup="formGroup" >
+            <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+            <dxi-validation-rule *ngIf="field.patternExpr" type="pattern" [pattern]="field.patternExpr" [message]="field.patternErroString" ></dxi-validation-rule>
+            <dxi-validation-rule *ngIf="field.lengthString" type="stringLength"
+              [min]="field.min !== null ? field.min : undefined"
+              [max]="field.max !== null ? field.max : undefined"
+              [message]="field.lengthErrorString"
+            ></dxi-validation-rule>
+            <dxi-validation-rule *ngIf="field.isEmail" type="email" [message]="field.isEmailErrorString" ></dxi-validation-rule>
+          </dx-validator>
+          </dx-text-area>
         </dxi-item>
+        
         <dxi-item *ngIf="field.type==Types.DATE" [dataField]="field.label" >
             <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
           <dx-date-box
+            invalidDateMessage="The date must have the following format: MM/dd/yyyy"
             [(value)]="field.defaultValue"
             [width]="200"
             [disabled]="field.disabled"
-          ></dx-date-box>
+          >
+          <dx-validator validationGroup="formGroup" >
+            <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+          </dx-validator>
+          </dx-date-box>
         </dxi-item>
+
+        <dxi-item *ngIf="field.type==Types.NUMBER_PICKER" [dataField]="field.label" >
+          <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+          <dx-number-box
+            [(value)]="field.defaultValue"
+            [disabled]="field.disabled"
+            [showSpinButtons]="true"
+            [showClearButton]="true"
+            [min]="field.min !== null ? field.min : undefined"
+            [max]="field.max !== null ? field.max : undefined"
+            [step]="field.step ? field.step : 1"
+          >
+          <dx-validator validationGroup="formGroup" >
+              <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+            </dx-validator>
+          </dx-number-box>
+        </dxi-item>
+
         <dxi-item *ngIf="field.type==Types.SELECT && field.multiple==false" [dataField]="field.label" >
             <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
             <dx-select-box
@@ -36,6 +84,9 @@
             width =  "100%"
             [disabled]="field.disabled"
             >
+            <dx-validator validationGroup="formGroup" >
+                <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+              </dx-validator>
             </dx-select-box>
         </dxi-item>
         <dxi-item *ngIf="field.type==Types.SELECT && field.multiple==true" [dataField]="field.label" >
@@ -48,8 +99,12 @@
           [disabled]="field.disabled"
           [(value)]="field.defaultValue"
           >
+          <dx-validator validationGroup="formGroup" >
+              <dxi-validation-rule *ngIf="field.required==true" type="required" message="please fill this field"></dxi-validation-rule>
+            </dx-validator>
           </dx-tag-box>
         </dxi-item>
+
         <dxi-item *ngIf="field.type==Types.RADIO" class="dx-field" >
           <div class="dx-field-label">{{field.label}}:</div>
           <div class="dx-field-value" >
@@ -60,9 +115,11 @@
               [(value)] = "field.selected"
               layout="horizontal"
               [disabled]="field.disabled"
-            ></dx-radio-group>
+            >
+          </dx-radio-group>
           </div>
         </dxi-item>
+
         <dxi-item #item *ngIf="field.type==Types.CHEKBOX" [dataField]="field.label" >
           <ng-container *ngFor="let checkElement of field.datas" >
             <dx-check-box 
@@ -78,8 +135,3 @@
     </dxi-item>
   </dx-form>
 </div>
-
-<!-- <div class="actions" >
-  <button class="btn btn-info" style="border-radius: 0px; text-transform: uppercase;" >{{validationButton}}</button>
-  <button class="btn btn-outline-info" style="border-radius: 0px; margin-left: 10px; text-transform: uppercase;">{{cancelButton}}</button>
-</div> -->

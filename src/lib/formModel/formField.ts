@@ -8,8 +8,17 @@ export interface FormField {
     type : FormTypes;
     datas? : string[] | CheckListType[] | URL,
     defaultValue? : string | Date | Number | any[],
+    min? : Number,
+    max? : Number,
+    step? : Number,
     required?: boolean/* = false*/;
     disabled? : boolean/* = false*/;
     multiple? : boolean ;
     valueTextUrl? : UrlKeys;
+    patternExpr? : any,
+    patternErroString? : string,
+    lengthString? : boolean,
+    lengthErrorString? : string,
+    isEmail? : boolean,
+    isEmailErrorString? : string
 }

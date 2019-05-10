@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormFile } from './formModel/formFile';
 import { FormTypes } from './formModel/formType';
 import { FormField } from './formModel/formField';
 import { DxDynamicFormService } from './libform.service';
+import { DxFormComponent } from 'devextreme-angular';
 
 @Component({
   selector: 'dx-dynamic-form',
@@ -10,6 +11,7 @@ import { DxDynamicFormService } from './libform.service';
   styleUrls: ['./libform.component.scss']
 })
 export class DxDynamicFormComponent implements OnInit {
+  @ViewChild(DxFormComponent) myform: DxFormComponent;
 
   @Input()
   nameCls : string;
@@ -129,7 +131,6 @@ private setAsynDatas(elmt : any, indexI : any, indexJ : any) {
   elmt.customData = [];
     this.formProvider.getItems(elmt.datas.origin + elmt.datas.port).subscribe(
       res => {
-        setTimeout(()=> {
           elmt.customData = res;
           elmt.selected = elmt.defaultValue;
         let id = setInterval(()=> {
@@ -138,7 +139,6 @@ private setAsynDatas(elmt : any, indexI : any, indexJ : any) {
             clearInterval(id);
           }
         },400)
-        },1000);
       },
       err => console.log(err));
 }
@@ -149,6 +149,9 @@ private getAttributeList<T>(obj: T) {
 
 
 generateDataToSend() {
+  if (!this.myform.instance.validate().isValid) {
+    return [];
+  }
   let dataToSend : any [] = [];
   let index = 0;
   for (let i =0; i< this.datas.length; i++) {
@@ -173,6 +176,12 @@ generateDataToSend() {
           data2[this.keysClass[index]] = formField.defaultValue;
           dataToSend.push(data2);
           index ++;
+        break;
+        case FormTypes.NUMBER_PICKER:
+          let data6={};
+          data6[this.keysClass[index]] = formField.defaultValue;
+          dataToSend.push(data6);
+          index++;
         break;
         case FormTypes.RADIO : 
           let data3 = {};
